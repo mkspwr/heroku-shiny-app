@@ -1,25 +1,23 @@
-# example from http://shiny.rstudio.com/gallery/kmeans-example.html
+# Define server logic required to draw a histogram ----
+server <- function(input, output) {
 
-library(shiny)
+  # Histogram of the Old Faithful Geyser Data ----
+  # with requested number of bins
+  # This expression that generates a histogram is wrapped in a call
+  # to renderPlot to indicate that:
+  #
+  # 1. It is "reactive" and therefore should be automatically
+  #    re-executed when inputs (input$bins) change
+  # 2. Its output type is a plot
+  output$distPlot <- renderPlot({
 
-palette(c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3", "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999"))
+    x    <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
 
-# Define server logic required to generate and plot a random distribution
-shinyServer(function(input, output, session) {
+    hist(x, breaks = bins, col = "#75AADB", border = "white",
+         xlab = "Waiting time to next eruption (in mins)",
+         main = "Histogram of waiting times")
 
-  # Combine the selected variables into a new data frame
-  selectedData <- reactive({
-    iris[, c(input$xcol, input$ycol)]
-  })
+    })
 
-  clusters <- reactive({
-    kmeans(selectedData(), input$clusters)
-  })
-
-  output$plot1 <- renderPlot({
-    par(mar=c(5.1, 4.1, 0, 1))
-    plot(selectedData(), col=clusters()$cluster, pch=20, cex=3)
-    points(clusters()$centers, pch=4, cex=4, lwd=4)
-  })
-
-})
+}
