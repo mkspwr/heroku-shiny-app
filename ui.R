@@ -1,17 +1,32 @@
-# example from http://shiny.rstudio.com/gallery/kmeans-example.html
-
 library(shiny)
 
-shinyUI(
-  pageWithSidebar(
-    headerPanel('Iris k-means clustering-Manoj'),
+# Define UI for app that draws a histogram ----
+ui <- fluidPage(
+
+  # App title ----
+  titlePanel("Hello Shiny!"),
+
+  # Sidebar layout with input and output definitions ----
+  sidebarLayout(
+
+    # Sidebar panel for inputs ----
     sidebarPanel(
-      selectInput('xcol', 'X Variable', names(iris)),
-      selectInput('ycol', 'Y Variable', names(iris), selected=names(iris)[[2]]),
-      numericInput('clusters', 'Cluster count', 3, min=1, max=9)
+
+      # Input: Slider for the number of bins ----
+      sliderInput(inputId = "bins",
+                  label = "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+
     ),
+
+    # Main panel for displaying outputs ----
     mainPanel(
-      plotOutput('plot1')
+
+      # Output: Histogram ----
+      plotOutput(outputId = "distPlot")
+
     )
   )
 )
