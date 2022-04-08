@@ -4,7 +4,7 @@ library(shiny)
 
 shinyUI(
   pageWithSidebar(
-    headerPanel('Iris k-means clustering'),
+    headerPanel('Iris k-means clustering-Manoj'),
     sidebarPanel(
       selectInput('xcol', 'X Variable', names(iris)),
       selectInput('ycol', 'Y Variable', names(iris), selected=names(iris)[[2]]),
